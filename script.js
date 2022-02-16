@@ -60,7 +60,6 @@ function resetGame() {
         cells[i].childNodes[0].src = ''
         cells[i].style.backgroundColor = 'black'
     }
-    field.addEventListener('click', move)
 }
 
 function findWinner() {
@@ -81,7 +80,8 @@ function findWinner() {
 
                 }
                 if(equal.length === 0) {
-                    twoArrays == 0 ? alert('First player win') : alert('Second player win')
+                    twoArrays == 0 ? alert('First player win') : alert('Second player win');
+                    
                 }
             }
     }
