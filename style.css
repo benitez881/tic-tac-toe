@@ -1,0 +1,20 @@
+.field {
+    margin: auto auto;
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background: grey;
+    border-radius: 5px;
+}
+.field__items {
+    display: flex;
+    flex-direction: row;
+}
+.cell {
+    border-radius: 5px;
+    margin: 2px;
+    width: 190px;
+    height: 190px;
+    background: #000;
+}
