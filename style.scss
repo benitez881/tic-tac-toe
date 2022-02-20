@@ -72,9 +72,17 @@ body {
         width: 150px;
         height: 150px;
     }
-    @media (max-width: 325px) {
+    @media (max-width: 460px) {
         width: 100px;
         height: 100px;
+    }
+    @media (max-width: 330px) {
+        width: 80px;
+        height: 80px;
+    }
+    @media (max-width: 270px) {
+        width: 60px;
+        height: 60px;
     }
 }
 

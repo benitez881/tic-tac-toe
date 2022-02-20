@@ -100,10 +100,24 @@ body {
   }
 }
 
-@media (max-width: 325px) {
+@media (max-width: 460px) {
   .cell {
     width: 100px;
     height: 100px;
+  }
+}
+
+@media (max-width: 330px) {
+  .cell {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 270px) {
+  .cell {
+    width: 60px;
+    height: 60px;
   }
 }
 
