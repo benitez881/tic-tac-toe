@@ -1,27 +1,67 @@
 const field = document.querySelector('.field')
 const cells = document.querySelectorAll('.cell')
-const resetBtn = document.querySelector('#resetButton')
 const resultHovered = document.querySelector('.results')
 const resultText = document.querySelector('.results__text')
+const winArrays = [[0,1,2], [3,4,5], [6,7,8], [0,4,8], [2,4,6], [0,3,6], [1,4,7], [2,5,8]]
+const ticUrl = ('./assets/svg/111.svg')
+const tacUrl = ('./assets/svg/222.svg')
+const body = document.querySelector('body')
 
+// buttons
+const resetBtn = document.querySelector('#resetButton')
+const historyBtn = document.querySelector('#historyBtn')
+const langBtn = document.querySelector('#langBtn')
+const themeBtn = document.querySelector('#themeBtn')
+
+// styles
+const darkCell = 'rgb(229, 229, 229)'
+const lightCell = 'rgb(33, 158, 188)'
+const lightCellClicked = '#ffb703'
+const darkCellClicked = '#fff'
+
+// variables
+let localLang = localStorage.getItem('engLanguage')
+let themeStor = localStorage.getItem('theme')
+
+let isEng = true
+let isDark = false
 let counter = 0
 let ticArr = []
 let tacArr = []
 let urlMove
-const ticUrl = ('./assets/svg/111.svg')
-const tacUrl = ('./assets/svg/222.svg')
 let players = [ticArr, tacArr]
-const winArrays = [[0,1,2], [3,4,5], [6,7,8], [0,4,8], [2,4,6], [0,3,6], [1,4,7], [2,5,8]]
 
 field.addEventListener('click', move)
 resetBtn.addEventListener('click', resetGame)
+themeBtn.addEventListener('click', themeChange)
+langBtn.addEventListener('click', langChange)
+
+const language = {
+    reset: {
+        en: 'Reset Game',
+        ru: 'Начать заново',
+    },
+    draw: {
+        en: 'Draw',
+        ru: 'Ничья',
+    },
+    first: {
+        en: 'First player win',
+        ru: 'Первый игрок выиграл',
+    },
+    second: {
+        en: 'Second player win',
+        ru: 'Второй игрок выиграл',
+    },
+}
 
 function move(event) {
     let target = event.target.closest('div')
     if(!target) return  
+    let style = getComputedStyle(target)
     if(target.className != 'cell') return
-    if(target.style.backgroundColor == '#faebd7') return
-    target.style.backgroundColor = '#faebd7'
+    if(style.backgroundColor != cellTheme()) return
+    target.style.backgroundColor = cellThemeClicked()
     target.childNodes[0].src = chooseTicOrTac()
     
     // Custom array.indexOf()
@@ -35,6 +75,13 @@ function move(event) {
     setTimeout(() => findWinner(), 0);
 }
 
+function cellThemeClicked() {
+    if(body.className == 'dark') {
+        return darkCellClicked
+    } else {
+        return lightCellClicked
+    }
+}
 function chooseArray(index) {
     if(counter % 2 == 0) {
         tacArr.push(index)
@@ -59,7 +106,7 @@ function resetGame() {
     tacArr = []
     cells.forEach(element => {
         element.childNodes[0].src = "";
-        element.style.backgroundColor = "#554a26";
+        element.style.backgroundColor = "";
     })
     players = [ticArr, tacArr]
     field.addEventListener('click', move)
@@ -72,7 +119,7 @@ function resetGame() {
 function findWinner() {
     for(let twoArrays = 0; twoArrays < players.length; twoArrays++) {
         if(ticArr.length + tacArr.length == 9) {
-           resultText.innerHTML = 'Draw'
+           resultText.textContent = language.draw[langChoose()]
             field.removeEventListener('click', move)
             resultHovered.style.visibility = 'visible'
             resultHovered.style.opacity = '1'
@@ -95,7 +142,7 @@ function findWinner() {
 
                 }
                 if(equal.length === 0) {
-                    twoArrays == 0 ? resultText.innerHTML = 'First player win' : resultText.innerHTML = 'Second player win';
+                    twoArrays == 0 ? resultText.textContent = language.first[langChoose()] : resultText.textContent = language.second[langChoose()];
                     field.removeEventListener('click', move)
                     resultHovered.style.visibility = 'visible'
                     resultHovered.style.opacity = '1'
@@ -105,3 +152,60 @@ function findWinner() {
             }
     }
 }
+
+function themeChange() {
+    if(body.className == 'dark') {
+        body.className = ''
+        localStorage.removeItem('theme')
+        localStorage.setItem('theme', 'light')
+    } else {
+        body.className = 'dark'
+        localStorage.removeItem('theme')
+        localStorage.setItem('theme', 'dark')
+    }
+    resetGame()
+}
+
+function checkTheme() {
+    if(themeStor == 'dark') {
+        themeChange()
+    }
+}
+function checkLang() {
+    if(localLang == 'false') {
+        isEng = true
+        langChange()
+    }
+}
+
+function cellTheme() {
+    if(body.className == 'dark') {
+        return darkCell
+    } else {
+        return lightCell
+    }
+}
+
+function langChange() {
+    isEng = !isEng
+    resetBtn.textContent = language.reset[langChoose()]
+    if(isEng) {
+        localStorage.removeItem('engLanguage')
+        localStorage.setItem('engLanguage', true)
+    } else {
+        localStorage.removeItem('engLanguage')
+        localStorage.setItem('engLanguage', false)
+    }
+
+    resetGame()
+}
+function langChoose() {
+    if(isEng) {
+        return 'en'
+    } else {
+        return 'ru'
+    }
+}
+
+checkLang()
+checkTheme()

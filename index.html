@@ -11,7 +11,7 @@
     <link rel="icon" type="image/x-icon" href="./assets/tic-tac-toe-hand-drawn-game.png">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="">
     <section class="field">
             <div class="results">
                     <span class="results__text">
@@ -34,9 +34,24 @@
                 <div class="cell"><img src="" alt=""></div>
             </div>
     </section>
-    <div class="button">
-        <button id="resetButton">Reset Game</button>
+    <div class="buttons">
+        <div class="button">
+            <button id="resetButton">Reset Game</button>
+        </div>
+
+        <div class="changeButtons">
+            <div class="changeButtons__img">
+                <img src="./assets/svg/theme_light_dark_icon_137104.svg" alt="" id="themeBtn">
+            </div>
+            <div class="changeButtons__img">
+                <img src="./assets/svg/language.svg" alt="" id="langBtn">
+            </div>
+            <div class="changeButtons__img" >
+                <img src="./assets/svg/history.svg" alt="" id="historyBtn">
+            </div>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
