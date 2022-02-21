@@ -177,6 +177,35 @@ body {
     }
 }
 
+.footer {
+    margin-top: auto;
+    margin-bottom: 0;
+    &__item {
+        width: 135px;
+        &-year{
+            text-align: center;
+        }
+        filter: invert(96%) sepia(0%) saturate(38%) hue-rotate(139deg) brightness(96%) contrast(77%);
+    }
+    &__item a img{ 
+        height: 50px;
+        filter: invert(96%) sepia(0%) saturate(38%) hue-rotate(139deg) brightness(96%) contrast(77%);
+    }
+    &__container {
+        max-width: 1280px;
+        margin: 20px auto;
+    }
+    &__items {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+.github a img{
+    height: 50px;
+}
+
 .dark {
     background: #14213d;
     .field {

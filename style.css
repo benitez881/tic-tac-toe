@@ -256,6 +256,52 @@ body {
           filter: invert(75%) sepia(88%) saturate(1608%) hue-rotate(357deg) brightness(99%) contrast(108%);
 }
 
+.footer {
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+.footer__item {
+  width: 135px;
+  -webkit-filter: invert(96%) sepia(0%) saturate(38%) hue-rotate(139deg) brightness(96%) contrast(77%);
+          filter: invert(96%) sepia(0%) saturate(38%) hue-rotate(139deg) brightness(96%) contrast(77%);
+}
+
+.footer__item-year {
+  text-align: center;
+}
+
+.footer__item a img {
+  height: 50px;
+  -webkit-filter: invert(96%) sepia(0%) saturate(38%) hue-rotate(139deg) brightness(96%) contrast(77%);
+          filter: invert(96%) sepia(0%) saturate(38%) hue-rotate(139deg) brightness(96%) contrast(77%);
+}
+
+.footer__container {
+  max-width: 1280px;
+  margin: 20px auto;
+}
+
+.footer__items {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.github a img {
+  height: 50px;
+}
+
 .dark {
   background: #14213d;
 }
