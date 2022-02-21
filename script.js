@@ -134,32 +134,20 @@ function resetGame() {
 function findWinner() {
     for(let twoArrays = 0; twoArrays < players.length; twoArrays++) {
         let moves = +ticArr.length + +tacArr.length
-        if(ticArr.length + tacArr.length == 9) {
-            resultWinner.textContent = language.draw[langChoose()]
-            resultMoves.textContent = language.moves[langChoose()] + ' ' + moves
-            field.removeEventListener('click', move)
-            resultHovered.style.visibility = 'visible'
-            resultHovered.style.opacity = '1'
-            resultText.style.visibility = 'visible'
-            resultText.style.opacity = '1'
-            gameHistory('draw', 9)
-            return
-        }
+        
         let player = players[twoArrays].slice(0)
 
         if(player.length < 2) return
 
         for(let z = 0; z < winArrays.length;z++) {
                 let equal = winArrays[z].slice(0)
-
                 for(let c = 0; c < player.length; c++) {
-
                     if(equal.includes(player[c])) {
                         let index = equal.indexOf(player[c])
                         equal.splice(index, 1)
                     }
-
                 }
+
                 if(equal.length === 0) {
                     if(twoArrays == 0) {
                         resultWinner.textContent = language.first[langChoose()]
@@ -173,7 +161,20 @@ function findWinner() {
                     resultHovered.style.visibility = 'visible'
                     resultHovered.style.opacity = '1'
                     resultText.style.visibility = 'visible'
-                    resultText.style.opacity = '1'                    
+                    resultText.style.opacity = '1'
+                    return               
+                }
+
+                if(ticArr.length + tacArr.length == 9 && equal.length === 0) {    
+                    resultWinner.textContent = language.draw[langChoose()]
+                    resultMoves.textContent = language.moves[langChoose()] + ' ' + moves
+                    field.removeEventListener('click', move)
+                    resultHovered.style.visibility = 'visible'
+                    resultHovered.style.opacity = '1'
+                    resultText.style.visibility = 'visible'
+                    resultText.style.opacity = '1'
+                    gameHistory('draw', 9)
+                    return
                 }
             }
     }
