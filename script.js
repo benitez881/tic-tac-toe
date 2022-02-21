@@ -135,6 +135,7 @@ function findWinner() {
     for(let twoArrays = 0; twoArrays < players.length; twoArrays++) {
         if(ticArr.length + tacArr.length == 9) {
             resultWinner.textContent = language.draw[langChoose()]
+            resultMoves.textContent = language.moves[langChoose()] + ' ' + moves
             field.removeEventListener('click', move)
             resultHovered.style.visibility = 'visible'
             resultHovered.style.opacity = '1'
