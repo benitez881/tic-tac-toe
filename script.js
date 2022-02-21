@@ -247,15 +247,21 @@ function gameHistory(winner, moves) {
 let isHistoryShowed = false
 function showHistory() {
     if(historyArr.length == 0) return
-    let ul = document.createElement('ol')
+    let ul = document.createElement('ul')
     for(let i = 0; i < historyArr.length; i++) {
         let tempObj = historyArr[i]
         let li = document.createElement('li')
-        if(isEng) {
-            if(tempObj.moves != undefined) {
-                li.innerHTML = `Winner: ${tempObj.winner}, moves: ${tempObj.moves}`
+            
+        if(tempObj.moves != undefined) {
+            if(isEng) {        
+                tempObj.winner == 'draw' ? li.innerHTML = `Draw` :
+                li.innerHTML = `Winner: ${tempObj.winner} player, moves: ${tempObj.moves}`
                 ul.append(li)
-            } 
+            } else {
+                tempObj.winner == 'draw' ? li.innerHTML = `Ничья` :
+                li.innerHTML = `Победитель: ${translatePlayers(tempObj.winner)} игрок, ходов: ${tempObj.moves}`
+                ul.append(li)
+            }
         }
         historyText.innerHTML = ''
         historyText.append(ul)
@@ -275,6 +281,15 @@ function showHistory() {
     }
 }
 
-
+function translatePlayers(enPlayer) {
+    switch(enPlayer) {
+        case 'first':
+            return 'первый'
+            break
+        case 'second':
+            return 'второй'
+            break
+    }
+}
 checkLang()
 checkTheme()
