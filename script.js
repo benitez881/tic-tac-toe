@@ -133,6 +133,7 @@ function resetGame() {
 
 function findWinner() {
     for(let twoArrays = 0; twoArrays < players.length; twoArrays++) {
+        let moves = +ticArr.length + +tacArr.length
         if(ticArr.length + tacArr.length == 9) {
             resultWinner.textContent = language.draw[langChoose()]
             resultMoves.textContent = language.moves[langChoose()] + ' ' + moves
@@ -160,7 +161,6 @@ function findWinner() {
 
                 }
                 if(equal.length === 0) {
-                    let moves = +ticArr.length + +tacArr.length
                     if(twoArrays == 0) {
                         resultWinner.textContent = language.first[langChoose()]
                         gameHistory('first', moves)
