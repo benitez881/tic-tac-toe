@@ -6,7 +6,10 @@ const winArrays = [[0,1,2], [3,4,5], [6,7,8], [0,4,8], [2,4,6], [0,3,6], [1,4,7]
 const ticUrl = ('./assets/svg/111.svg')
 const tacUrl = ('./assets/svg/222.svg')
 const body = document.querySelector('body')
-
+const resultWinner = document.querySelector('.results__winner')
+const resultMoves = document.querySelector('.results__moves')
+const historyHovered = document.querySelector('.history')
+const historyText = document.querySelector('.history__text')
 // buttons
 const resetBtn = document.querySelector('#resetButton')
 const historyBtn = document.querySelector('#historyBtn')
@@ -23,6 +26,13 @@ const darkCellClicked = '#fff'
 let localLang = localStorage.getItem('engLanguage')
 let themeStor = localStorage.getItem('theme')
 
+let historyArr = [
+    
+]
+if(localStorage.getItem('history')) {
+    historyArr = JSON.parse(localStorage.getItem('history'))
+}
+
 let isEng = true
 let isDark = false
 let counter = 0
@@ -35,6 +45,7 @@ field.addEventListener('click', move)
 resetBtn.addEventListener('click', resetGame)
 themeBtn.addEventListener('click', themeChange)
 langBtn.addEventListener('click', langChange)
+historyBtn.addEventListener('click', showHistory)
 
 const language = {
     reset: {
@@ -52,6 +63,10 @@ const language = {
     second: {
         en: 'Second player win',
         ru: 'Второй игрок выиграл',
+    },
+    moves: {
+        en: 'Number of moves',
+        ru: 'Количество ходов',
     },
 }
 
@@ -119,12 +134,14 @@ function resetGame() {
 function findWinner() {
     for(let twoArrays = 0; twoArrays < players.length; twoArrays++) {
         if(ticArr.length + tacArr.length == 9) {
-           resultText.textContent = language.draw[langChoose()]
+            resultWinner.textContent = language.draw[langChoose()]
             field.removeEventListener('click', move)
             resultHovered.style.visibility = 'visible'
             resultHovered.style.opacity = '1'
             resultText.style.visibility = 'visible'
-            resultText.style.opacity = '1'    
+            resultText.style.opacity = '1'
+            gameHistory('draw', 9)
+            return
         }
         let player = players[twoArrays].slice(0)
 
@@ -142,7 +159,15 @@ function findWinner() {
 
                 }
                 if(equal.length === 0) {
-                    twoArrays == 0 ? resultText.textContent = language.first[langChoose()] : resultText.textContent = language.second[langChoose()];
+                    let moves = +ticArr.length + +tacArr.length
+                    if(twoArrays == 0) {
+                        resultWinner.textContent = language.first[langChoose()]
+                        gameHistory('first', moves)
+                    } else {
+                        resultWinner.textContent = language.second[langChoose()]
+                        gameHistory('second', moves)
+                    }
+                    resultMoves.textContent = language.moves[langChoose()] + ' ' + moves
                     field.removeEventListener('click', move)
                     resultHovered.style.visibility = 'visible'
                     resultHovered.style.opacity = '1'
@@ -206,6 +231,50 @@ function langChoose() {
         return 'ru'
     }
 }
+
+function gameHistory(winner, moves) {
+    
+    historyArr.unshift({
+        'winner': winner,
+        'moves': moves,
+    })
+
+    if(historyArr.length > 10) historyArr.pop()
+    localStorage.removeItem('history')
+    localStorage.setItem('history', JSON.stringify(historyArr))
+}
+
+let isHistoryShowed = false
+function showHistory() {
+    if(historyArr.length == 0) return
+    let ul = document.createElement('ol')
+    for(let i = 0; i < historyArr.length; i++) {
+        let tempObj = historyArr[i]
+        let li = document.createElement('li')
+        if(isEng) {
+            if(tempObj.moves != undefined) {
+                li.innerHTML = `Winner: ${tempObj.winner}, moves: ${tempObj.moves}`
+                ul.append(li)
+            } 
+        }
+        historyText.innerHTML = ''
+        historyText.append(ul)
+    }
+    if(isHistoryShowed) {
+        historyHovered.style.visibility = 'visible'
+        historyHovered.style.opacity = '1'
+        historyText.style.visibility = 'visible'
+        historyText.style.opacity = '1'   
+        isHistoryShowed = !isHistoryShowed 
+    } else {
+        historyHovered.style.visibility = 'hidden'
+        historyHovered.style.opacity = '0'
+        historyText.style.visibility = 'hidden'
+        historyText.style.opacity = '0'   
+        isHistoryShowed = !isHistoryShowed 
+    }
+}
+
 
 checkLang()
 checkTheme()
