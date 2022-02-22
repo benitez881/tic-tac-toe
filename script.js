@@ -165,19 +165,21 @@ function findWinner() {
                     return               
                 }
 
-                if(ticArr.length + tacArr.length == 9 && equal.length === 0) {    
-                    resultWinner.textContent = language.draw[langChoose()]
-                    resultMoves.textContent = language.moves[langChoose()] + ' ' + moves
-                    field.removeEventListener('click', move)
-                    resultHovered.style.visibility = 'visible'
-                    resultHovered.style.opacity = '1'
-                    resultText.style.visibility = 'visible'
-                    resultText.style.opacity = '1'
-                    gameHistory('draw', 9)
-                    return
-                }
-            }
+                
+        }
+        if(ticArr.length + tacArr.length == 9) {    
+            resultWinner.textContent = language.draw[langChoose()]
+            resultMoves.textContent = language.moves[langChoose()] + ' ' + moves
+            field.removeEventListener('click', move)
+            resultHovered.style.visibility = 'visible'
+            resultHovered.style.opacity = '1'
+            resultText.style.visibility = 'visible'
+            resultText.style.opacity = '1'
+            gameHistory('draw', 9)
+            return
+        }
     }
+    
 }
 
 function themeChange() {
